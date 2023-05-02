@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier un artiste{% endblock %}
+
+{% block body %}
+    <h2>Modifier un artiste</h2> 
+   
+    <form name="artist" method="post">
+        <input type="hidden" name="_method" value="PUT" />    
+        <div>
+            <label for="artist_firstname" class="required">Prénom</label>
+            <input type="text" id="artist_firstname" name="artist[firstname]" 
+                required="required" maxlength="60" pattern=".{2,}" value="{{ artist.firstname }}" />
+        </div>
+        
+        <div>
+            <label for="artist_lastname" class="required">Nom</label>
+            <input type="text" id="artist_lastname" name="artist[lastname]" 
+                required="required" maxlength="60" pattern=".{2,}" value="{{ artist.lastname }}" />
+        </div>
+        {# A vérifier avec le prof#}
+        {{ form_widget(form._token) }} {# Add CSRF token here #}
+
+        <div><button type="submit" id="artist_save" name="artist[save]">Modifier</button></div>
+
+        <input type="hidden" id="artist__token" name="artist[_token]" value="{{ csrf_token('artist') }}" />
+    </form>
+
+    <p><a href="{{ path('artist_show', {'id': artist.id}) }}">Annuler</a></p>
+    <nav><a href="{{ path('artist_index') }}">Retour à l'index</a></nav>
+{% endblock %}

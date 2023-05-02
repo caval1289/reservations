@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Fiche d'une représentation{% endblock %}
+
+{% block body %}
+    <article>
+        <h1>Représentation du {{ representation.schedule|date('d/m/Y') }} à {{ representation.schedule|date('G:i') }}</h1>
+        <p><strong>Spectacle:</strong> {{ representation.theShow.title }}</p>
+
+        <p><strong>Lieu:</strong> 
+        {% if representation.theLocation %}
+        {{ representation.theLocation.designation }}
+        {% elseif representation.theShow.location %}
+        {{ representation.theShow.location.designation }}
+        {% else %}
+        <em>à déterminer</em>
+        {% endif %}
+        </p>
+    </article>
+
+    <nav><a href="{{ path('representation_index') }}">Retour à l'index</a></nav>
+{% endblock %}

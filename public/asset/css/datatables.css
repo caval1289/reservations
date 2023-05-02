@@ -1,0 +1,66 @@
+/*Show index */
+
+#table_shows {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#table_shows th,
+#table_shows td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+#table_shows th {
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+#table_shows tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#table_shows tbody tr:hover {
+  background-color: #ddd;
+
+}
+
+.wrapper {
+  margin: 1em auto;
+  max-width: 800px;
+  width: 95%;
+  border: 1px solid black;
+  padding: 1em;
+  font: 14px/1.5 sans-serif;
+}
+
+/* Artist index*/
+
+.page-header {
+  margin-bottom: 1em;
+  text-align: center;
+}
+
+.table_artist {
+  margin: 1em auto;
+  max-width: 800px;
+  width: 95%;
+  border: 1px solid black;
+  padding: 1em;
+  font: 14px/1.5 sans-serif;
+}
+
+#btn_ajouter {
+  text-align: center;
+}
+
+
+.btn_ajouter button {
+  margin: 0 auto;
+  display: block;
+  width: 10%;
+}
+
+
+

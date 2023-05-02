@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page d'Accueil{% endblock %}
+
+{% block body %}
+{% include 'includes/header.html.twig' %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 offset-md-3 text-center">
+      <h1>Site en Construction</h1>
+      <img src="{{ asset('images/underconstruct.jpg') }}" alt="Site Under Construction" style="width:50%; height:50%" />      
+    </div>
+  </div>
+  <br>
+  <br>
+</div>
+
+<section>
+  <div >
+    <h3>Road Map terminée</h3>
+    <h3 >Liste des fonctions déjà déployées</h3>
+    <ul>
+      <li>Affhichage de la table <a  href="/artist" target="_blank"> Artist</a></li>
+      <li>Affhichage de la table <a  href="/show" target="_blank"> Show</a></li>
+      <li>Fonction <a  href="/login" target="_blank"> Se Connecter</a></li>
+      <li>Fonction <a  href="/inscription" target="_blank"> S'inscrire</a></li>
+      <li>Fonction envoie d'email</li>
+    </ul>
+  </div>
+</section>
+
+
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Fiche d'une locality{% endblock %}
+{# Pourquoi locality et pas localites#}
+{% block body %}
+    <h1>{{ locality.postalcode }} {{ locality.locality|capitalize }}</h1>
+    <ul>
+    {% for location in locality.locations %}
+        <li>{{ location.designation }}</li>
+    {% endfor %}
+    </ul>
+
+    <nav><a href="{{ path('locality_index') }}">Retour à l'index</a></nav>
+{% endblock %}

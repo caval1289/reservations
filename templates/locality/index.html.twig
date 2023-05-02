@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des localités {% endblock %}
+
+{% block body %}
+    <h1>Liste des  {{ resource }}</h1>
+
+    <ul>
+    {% for locality in locality %}
+        <li><a href="{{ path('locality_show', { id: locality.id }) }}">{{locality.postalcode}} {{ locality.locality}} </a></li>
+    {% endfor %}
+    </ul>
+{% endblock %}

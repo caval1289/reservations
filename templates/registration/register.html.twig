@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %} {% block title %}Inscription{% endblock %} {%
+    block body %}
+   
+    
+    <section
+      class="vh-100 bg-image"
+      style="
+        background-image: url('https://img.freepik.com/free-photo/back-view-crowd-fans-watching-live-performance-music-concert-night-copy-space_637285-544.jpg?w=1480&t=st=1682349740~exp=1682350340~hmac=51b19fa6bb79ef2090aec0a6f6fbc95742ef93a80ecc504ced3a33d3c5916b7f');
+      "
+    >
+      <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+        <div class="container h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+              <div class="card" style="border-radius: 15px">
+                <div class="card-body p-5">
+                  <h2 class="text-uppercase text-center mb-5">Crée un compte</h2>
+    
+                  {{ form_start(registrationForm, {'action': path('app_register')}) }}
+    
+                  <fieldset>
+                    <legend>Mon identité</legend>
+                    {{ form_row(registrationForm.lastname) }}
+                    {{ form_row(registrationForm.firstname) }} 
+                    {{ form_row(registrationForm.email) }} 
+                    {{ form_row(registrationForm.login) }} 
+                    {{ form_row(registrationForm.language) }} 
+                  </fieldset>
+    
+                  {{ form_row(registrationForm.plainPassword, {
+                      label: "Mot de passe"})
+                  }}
+    
+                  <div my-3> {{ form_row(registrationForm.RGPDAgrement) }}</div>
+    
+                  <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">M'inscrire </button>
+                  </div>
+    
+                  {{ form_end(registrationForm) }}
+    
+                  <p class="text-center text-muted mt-5 mb-0">
+                    Déjà membre?
+                    <a href="/login" class="fw-bold text-body"><u>Connection</u></a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    {% endblock %}
+    
