@@ -5,6 +5,7 @@
 {% if app.user.getIsVerified() ==1 %}
 
     {% include 'includes/header.html.twig' %}
+    <h2>Profil de {{app.user.firstname}} {{app.user.lastname}}</h2>
     <section class="vh-100" style="background-color: #9de2ff;">
         <div class="container py-5 h-100">
           <div class="row d-flex justify-content-center align-items-center h-100">
@@ -28,13 +29,22 @@
                     <li class="list-group-item">
                       <strong>Email:</strong> {{ app.user.email }}
                     </li>
+                    <li class="list-group-item">
+                        <div >                       
+                            <button type="button" class="btn btn-primary" <a href="#" ></a>Modifier le profil</button>
+                            <button type="button" class="btn btn-primary" <a href="#" ></a>Modifier le mot de passe</button>
+                        </div>                       
+                    </li>
                   </ul>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        
+        
       </section>
+      
      {% else %}     
         <div class="alert alert-warning alert-dismissible " role="alert" style="font-size: 1rem" >
             <div class="d-flex justify-content-between">
@@ -44,9 +54,7 @@
                 <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">x</button>
             </div>
         </div>
-{% endif %}
-
-    
+{% endif %}    
       
 
 {% endblock %}
