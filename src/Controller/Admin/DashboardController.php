@@ -22,12 +22,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 
 #[Route('/admin')]
-#[IsGranted(["ROLE_ADMIN"])]
+
 class DashboardController extends AbstractDashboardController
 {
 
     #[Route('/', name: 'admin_locale')]
-    #[IsGranted(["ROLE_ADMIN"])]
+  
 
     public function index(): Response
     {
@@ -47,5 +47,7 @@ class DashboardController extends AbstractDashboardController
     {
        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
        yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-list', User::class);
+       yield MenuItem::linkToCrud('Artists', 'fas fa-list', Artist::class);
+
     }
 }
