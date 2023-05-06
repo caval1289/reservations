@@ -26,8 +26,10 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
+  //  #[ORM\GeneratedValue]
+   // #[ORM\Column]
+    #[ORM\GeneratedValue(strategy:"AUTO")]
+    #[ORM\Column(type:"integer")]
 
     private ?int $id = null;
 

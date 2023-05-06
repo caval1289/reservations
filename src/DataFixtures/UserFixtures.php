@@ -38,6 +38,16 @@ class UserFixtures extends Fixture
                 'email'=>'fred@sull.com',
                 'langue'=>'en',
             ],
+
+            [
+                'login'=>'sams',
+                'password'=>'123',
+                'role'=>'ROLE_ADMIN',
+                'firstname'=>'Samir',
+                'lastname'=>'Boudekhan',
+                'email'=>'sboudekhan@hotmail.com',
+                'langue'=>'fr',
+            ],
         ];
 
         foreach ($users as $record) {
