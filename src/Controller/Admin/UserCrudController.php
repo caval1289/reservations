@@ -13,7 +13,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
-
+use EasyCorp\Bundle\EasyAdminBundle\Field\LanguageField;
 
 
 class UserCrudController extends AbstractCrudController
@@ -50,8 +50,11 @@ class UserCrudController extends AbstractCrudController
             TextField::new('login'),
             TextField::new('firstname'),
             TextField::new('lastname'),
-            TextField::new('language'),
-            BooleanField::new('is_verified'), 
+        LanguageField::new('language')->includeOnly(['en', 'fr', 'nl']),
+        //pour toutes les langues 
+           // LanguageField::new('language'),
+            BooleanField::new('is_verified'),
+
 
   //          DateTimeField::new('createdAt'),
       //      TextEditorField::new('description'),
