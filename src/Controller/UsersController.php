@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use App\Form\ChangePasswordType;
-use \App\Entity\User;
+
 
 
 class UsersController extends AbstractController
@@ -40,7 +40,7 @@ class UsersController extends AbstractController
         return $this->render('users/edituser.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
-        ]);
+        ]); 
     }
 
  
@@ -51,27 +51,40 @@ class UsersController extends AbstractController
             $user = $this->getUser();
             $form = $this->createForm(ChangePasswordType::class);
             $form->handleRequest($request);
+
+            $pwdFisrt = $form->get('password')['first']->getData();
+            $pwdSecond = $form->get('password')['second']->getData();
+                    
+            if ($request->getMethod() == 'POST') {
+                
+                if ($pwdFisrt === $pwdSecond) {
+                    // encode the plain password
+                    $user->setPassword(
+                        $userPasswordHasher->hashPassword(
+                            $user,
+                            $form->get('password')->getData()
+                        )
+                    );
             
-            if ($form->isSubmitted() && $form->isValid()) {
-                // encode the plain password
-                $user->setPassword(
-                    $userPasswordHasher->hashPassword(
-                        $user,
-                        $form->get('password')->getData()
-                    )
-                );
-    
-                $this->addFlash('success', 'Mot de passe mis à jour');
-                $em->persist($user);
-                $em->flush();
-    
-                return $this->redirectToRoute('user_profil');
+                    $this->addFlash('success', 'Mot de passe mis à jour');
+                    $em->persist($user);
+                    $em->flush();
+                    
+                    return $this->redirectToRoute('user_profil');
+                } else {                    
+                   
+                    $this->addFlash('warning', 'Les deux mots de passe ne sont pas identiques');                    
+                }
+            
             }
-    
+
+            
+
             return $this->render('users/pwduser.html.twig', [
                 'form' => $form->createView(),
             ]);
         }
+
 
 }
 

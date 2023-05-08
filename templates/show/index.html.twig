@@ -25,15 +25,14 @@
                     <th>Représentations</th>
                     <th>Prix</th>
                     <th>Réservable</th>
+                    <th>Description</th>
                 </tr>
             </thead>
             <tbody>
                 {% for show in shows %}
                     <tr>
                         <td>
-                            <a href="{{ path('show_show', {'id': show.id}) }}">
-                                {{ show.title | title }}
-                            </a>
+                            {{ show.title | title }}
                         </td>
                         <td>
                             {% for author in show.authors %}
@@ -48,9 +47,15 @@
                         {% else %}
                             <td>Non</td>
                         {% endif %}
+                        <td>
+                            <a href="{{ path('show_show', {'id': show.id}) }}" class="btn btn-primary">
+                                Voir
+                            </a>
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>
+            
         </table>
 
         <p>Total: {{ shows | length }} spectacles.</p>
