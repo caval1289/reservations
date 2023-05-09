@@ -14,4 +14,4 @@ php bin/console doctrine:migrations:migrate
 php bin/console doctrine:fixtures:load
 
 # Run project
-php -s localhost:8000 -t public
+php -s 127.0.0.1:8000 -t public

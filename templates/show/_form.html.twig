@@ -1,0 +1,12 @@
+{{form_start(form,{'method':http_method,attr : {novalidate:'novalidate'}}) }}
+<div>
+	{{ form_label( form.title, 'Titre :' ) }}
+	{{ form_widget( form.title ) }}
+	{{ form_help( form.title )}}
+	{% if not form.vars.valid %}
+		<div class="errors">
+			{{ form_errors( form.title ) }}
+		</div>
+	{% endif %}
+</div>
+{{form_end(form)}}

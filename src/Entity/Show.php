@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping\JoinColumn;
 
 
@@ -27,6 +28,12 @@ class Show
     private ?string $slug = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(
+        min: 2,
+        max: 255,
+        minMessage: "Le titre doit faire au moins {{ limit }} caractères",
+        maxMessage: "Le titre ne peut pas faire plus de {{ limit }} caractères"
+    )]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -37,15 +44,30 @@ class Show
 
     #[ORM\ManyToOne(inversedBy: 'shows')]
     #[ORM\JoinColumn(onDelete: 'RESTRICT')]
+    #[Assert\Length(
+        min: 2,
+        max: 255,
+        minMessage: "Le lieu doit faire au moins {{ limit }} caractères",
+        maxMessage: "Le lieu ne peut pas faire plus de {{ limit }} caractères"
+    )]
     private ?Location $location = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(
+        message: "Veuillez indiquer si le spectacle est réservable ou non"
+    )]
     private ?bool $bookable = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 12, scale: 2, nullable: true)]
+    #[Assert\PositiveOrZero(
+        message: "Le prix ne peut pas être négatif"
+    )]
     private ?string $price = null;
 
     #[ORM\OneToMany(mappedBy: 'the_show', targetEntity: Representation::class, orphanRemoval: true)]
+    #[Assert\PositiveOrZero(
+        message: "Le prix ne peut pas être négatif"
+    )]
     private Collection $representations;
 
     #[ORM\ManyToMany(targetEntity: ArtistType::class, inversedBy: 'shows')]

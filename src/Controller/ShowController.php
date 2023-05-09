@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Show;
 use App\Repository\ShowRepository;
+use App\Form\ShowType;
 
 #[Route('/show')]
 
@@ -42,6 +44,24 @@ class ShowController extends AbstractController
         return $this->render('show/show.html.twig', [
             'show' => $show,
             'collaborateurs' => $collaborateurs,
+        ]);
+    }
+
+    #[Route('/{id}/edit', name:'show_edit', methods: ['GET', 'POST'])]
+    public function edit (Request $request, Show $show, ShowRepository $showRepository): Response
+    {
+        $form = $this->createForm(ShowType::class, $show);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $showRepository -> save($show, true);
+
+            return $this->redirectToRoute('show_index',[], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('show/edit.html.twig', [
+            'show' => $show,
+            'form' => $form->createView(),
         ]);
     }
 }
