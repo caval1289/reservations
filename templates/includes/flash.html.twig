@@ -1,17 +1,38 @@
-{% for label, messages in app.flashes %}
+{% for label, messages in app.flashes() %}
     {% for message in messages %}
-
-        {% if app.user and app.user.isverified == false %}
-        <div class="alert alert-{{label}} alert-dismissible " role="alert" style="font-size: 1rem" >
-            <div class="d-flex justify-content-between">
-                <div class="alert-message">
-                    {{message|raw}}
+        {% if label == 'success'  %}
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <div class="d-flex justify-content-between">
+                    <div class="alert-message">
+                        {{ message }}
+                    </div>
+                    <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">x</button>
             </div>
-        </div>
-    {% endif %}     
-        
+        {% elseif label == 'danger' %}
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <div class="d-flex justify-content-between">
+                    <div class="alert-message">
+                        {{ message }}
+                    </div>
+                    <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        {% elseif label == 'warning' %}
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <div class="d-flex justify-content-between">
+                    <div class="alert-message">
+                        {{ message }}
+                    </div>
+                    <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        {% endif %}
     {% endfor %}
-    
 {% endfor %}
