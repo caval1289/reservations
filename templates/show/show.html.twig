@@ -1,64 +1,105 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Fiche d'un spectacle{% endblock %}
+{% block title %}Fiche d'un spectacle
+{% endblock %}
 
 {% block body %}
-    <article>
-        <h1>{{ show.title }}</h1>
+	<article>
+		<h1>{{ show.title }}</h1>
 
-        {% if show.posterUrl %}
-        <p><img src="{{ asset(show.getposterUrl()) }}" alt="{{ show.title }}" width="200"></p>
-        {% else %}
-        <canvas width="200" height="100" style="border:1px solid #000000;"></canvas>
-        {% endif %}
+		{% if show.posterUrl %}
+			<p><img src="{{ asset(show.getposterUrl()) }}" alt="{{ show.title }}" width="200"></p>
+		{% else %}
+			<canvas width="200" height="100" style="border:1px solid #000000;"></canvas>
+		{% endif %}
 
-        {% if show.location %}
-        <p><strong>Lieu de création:</strong> {{ show.location.designation }}</p>
-        {% endif %}
-        
-       <p><strong>Prix:</strong> {{ show.price }} €</p>
+		{% if show.location %}
+			<p>
+				<strong>Lieu de création:</strong>
+				{{ show.location.designation }}</p>
+		{% endif %}
 
-        {% if show.bookable %}
-        <p><em>Réservable</em></p>
-        {% else %}
-        <p><em>Non réservable</em></p>
-        {% endif %}
-    </article>
+		<p>
+			<strong>Prix:</strong>
+			{{ show.price }}
+			€</p>
 
-           <h2>Liste des représentations</h2>
-        {% if show.representations|length>=1 %}
-        <ul>
-            {% for representation in show.representations %}
-                <li>{{ representation.schedule|date('d/m/Y G:i:s') }}</li>              
+		{% if show.bookable %}
+			<p>
+				<em>Réservable</em>
+			</p>
+		{% else %}
+			<p>
+				<em>Non réservable</em>
+			</p>
+		{% endif %}
+	</article>
+
+	<h2>Liste des représentations</h2>
+	{% if show.representations|length>=1 %}
+		<ul>
+			{% for representation in show.representations %}
+				<li>{{ representation.schedule|date('d/m/Y G:i:s') }}</li>
+			{% endfor %}
+		</ul>
+	{% else %}
+		<p>Aucune représentation</p>
+	{% endif %}
+
+	<h2>Liste des artistes</h2>
+    <p>
+        <strong>Auteur:</strong>
+        {% if collaborateurs['auteur'] is defined and collaborateurs['auteur'] is not empty %}
+            {% for auteur in collaborateurs['auteur'] %}
+                {{ auteur.firstname }}
+                {{ auteur.lastname }}
+                {% if not loop.last %},
+                {% endif %}
             {% endfor %}
-        </ul>
         {% else %}
-        <p>Aucune représentation</p>
+            {% for artistType in show.artistTypes %}
+                {% if artistType.type.type == 'Auteur' %}
+                    {% set artists = artistType.artists %}
+                    {% for artist in artists %}
+                        {{ artist.firstname }}
+                        {{ artist.lastname }}
+                        {% if not loop.last %},
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
         {% endif %}
-        
-        <h2>Liste des artistes</h2>
-        <p><strong>Auteur:</strong>
-        {% for auteur in collaborateurs['auteur'] %}
-            {{ auteur.firstname }} 
-            {{ auteur.lastname }}{% if loop.index == loop.length-1 %} et 
-            {% elseif not loop.last %}, {% endif %}
-        {% endfor %}
-        </p>
-        <p><strong>Metteur en scène:</strong>
-        {% for scenographe in collaborateurs['scénographe'] %}
-            {{ scenographe.firstname }} 
-            {{ scenographe.lastname }}{% if loop.index == loop.length-1 %} et 
-            {% elseif not loop.last %}, {% endif %}
-        {% endfor %}
-        </p>
-        <p><strong>Distribution:</strong>
-        {% for comedien in collaborateurs['comédien'] %}
-            {{ comedien.firstname }} 
-            {{ comedien.lastname }}{% if loop.index == loop.length-1 %} et 
-            {% elseif not loop.last %}, {% endif %}
-        {% endfor %}
-        </p>
+    </p>
+	<p>
+		<strong>Metteur en scène:</strong>
+		{% for artistType in show.artistTypes %}
+			{% if artistType.type.getType() == 'scénographe' %}
+				{% if loop.index > 1 %},
+				{% endif %}
+				{{ artistType.artist.firstname }}
+				{{ artistType.artist.lastname }}
+			{% endif %}
+		{% endfor %}
 
-    <nav><a href="{{ path('location_index') }}">Retour à l'index</a></nav>
-    
+	</p>
+	<p>
+		<strong>Distribution:</strong>
+		{% for artistType in show.artistTypes %}
+			{% if artistType.type.getType() == 'comédien' %}
+				{% if loop.index > 1 %},
+				{% endif %}
+				{{ artistType.artist.firstname }}
+				{{ artistType.artist.lastname }}
+			{% endif %}
+		{% endfor %}
+
+	</p>
+	<div>
+		<a href="{{ path('show_edit',{id:show.id})}}">Modifier</a>
+	</div>
+	{{ include('show/_delete_form.html.twig') }}
+	<nav>
+		<a href="{{ path('location_index') }}">Retour à l'index</a>
+	</nav>
+
 {% endblock %}

@@ -1,4 +1,16 @@
 {{form_start(form,{'method':http_method,attr : {novalidate:'novalidate'}}) }}
+
+<div>
+	{{ form_label( form.slug, 'Slug :' ) }}
+	{{ form_widget( form.slug ) }}
+	{{ form_help( form.slug )}}
+	{% if not form.vars.valid %}
+		<div class="errors">
+			{{ form_errors( form.slug ) }}
+		</div>
+	{% endif %}
+</div>
+
 <div>
 	{{ form_label( form.title, 'Titre :' ) }}
 	{{ form_widget( form.title ) }}
@@ -9,4 +21,62 @@
 		</div>
 	{% endif %}
 </div>
+
+<div>
+	{{ form_label( form.description, 'Déscription :' ) }}
+	{{ form_widget( form.description ) }}
+	{{ form_help( form.description )}}
+	{% if not form.vars.valid %}
+		<div class="errors">
+			{{ form_errors( form.description ) }}
+		</div>
+	{% endif %}
+</div>
+
+<div>
+	{{ form_label( form.poster_url, 'URl Image :' ) }}
+	{{ form_widget( form.poster_url ) }}
+	{{ form_help( form.poster_url )}}
+	{% if not form.vars.valid %}
+		<div class="errors">
+			{{ form_errors( form.poster_url ) }}
+		</div>
+	{% endif %}
+</div>
+
+<div>
+	{{ form_label( form.bookable, 'Réservable :' ) }}
+	{{ form_widget( form.bookable ) }}
+	{{ form_help( form.bookable )}}
+	{% if not form.vars.valid %}
+		<div class="errors">
+			{{ form_errors( form.bookable ) }}
+		</div>
+	{% endif %}
+</div>
+
+<div>
+	{{ form_label( form.price, 'Prix :' ) }}
+	{{ form_widget( form.price ) }}
+	{{ form_help( form.price )}}
+	{% if not form.vars.valid %}
+		<div class="errors">
+			{{ form_errors( form.price ) }}
+		</div>
+	{% endif %}
+</div>
+
+<div>
+	{{ form_label(form.location, 'Lieu :') }}
+	{{ form_widget(form.location) }}
+	{{ form_errors(form.location) }}
+</div>
+
+<div>
+    {{ form_label(form.artistTypes, 'Artistes :') }}
+    {{ form_widget(form.artistTypes) }}
+    {{ form_errors(form.artistTypes) }}
+</div>
+
+{{ form_row(form.save, { 'label': button_label }) }}
 {{form_end(form)}}

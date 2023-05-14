@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+	Créé un show
+{% endblock %}
+
+{% block body %}
+	<h2>
+		Créer un show
+	</h2>
+
+	{{ include('show/_form.html.twig', {'http_method':'POST', 'button_label':'Ajouter'}) }}
+	<nav>
+		<a href="{{ path('show_index') }}">Retour à la liste</a>
+	</nav>
+{% endblock %}

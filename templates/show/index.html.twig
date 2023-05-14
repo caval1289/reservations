@@ -46,7 +46,7 @@ $("#table_shows").DataTable();
 							<td>Non</td>
 						{% endif %}
 						<td>
-							<a href="{{ path('show_edit',{id:show.id})}}">Modifier</a>
+						<a href="{{ path('show_show', { id: show.id }) }}">Afficher</a>
 						</td>
 					</tr>
 				{% endfor %}
@@ -58,7 +58,9 @@ $("#table_shows").DataTable();
 			{{ shows | length }}
 			spectacles.</p>
 	</div>
-
+<nav>
+		<a href="{{path('show_new')}}">Ajouter</a>
+	</nav>
 
 	{% include 'includes/footer.html.twig' %}
 {% endblock %}
