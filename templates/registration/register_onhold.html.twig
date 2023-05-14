@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %} {% block title %}Inscription{% endblock %} 
+
+{% block body %}
+{% include 'includes/flash.html.twig' %}
+    <p>Un email de validation a été envoyé à l'adresse {{user.email}}.</p>
+    <p>Veuillez activer votre compte en cliquant sur le lien de validation qui vous a été envoyé. Si vous n'avez pas reçu l'email, veuillez vérifier votre dossier de courrier indésirable ou contactez notre service d'assistance pour obtenir de l'aide."</p>
+    
+
+{% endblock %}

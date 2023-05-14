@@ -1,57 +1,65 @@
-{% extends 'base.html.twig' %} {% block title %}{{ resource }}{% endblock %} 
-{%block body %} 
-{% include 'includes/header.html.twig' %}
+{% extends 'base.html.twig' %} 
+{% block title %}{{ resource }}{% endblock %} 
 
-<link
-  rel="stylesheet"
-  type="text/css"
-  href="{{ asset('asset/css/datatables.css') }}"
-/>
+{% block body %} 
+    {% include 'includes/header.html.twig' %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('asset/css/datatables.css') }}" />
 
-<script>
-  $(document).ready(function () {
-    $("#table_shows").DataTable();
-  });
+    <script>
+        $(document).ready(function () {
+            $("#table_shows").DataTable();
+        });
+    </script>
 
-  
-</script>
     {% include 'includes/menu.html.twig' %}
-<div class="wrapper">
-  <h1>{{ resource }}</h1>
 
-  <table id="table_shows">
-    <thead>
-      <tr>
-        <th>Titre</th>
-        <th>Auteur</th>
-        <th>Lieu</th>
-        <th>Représentations</th>
-        <th>Prix</th>
-        <th>Réservable</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for show in shows %}
-      <tr>
-        <td>{{ show.title | title }}</td>
-        <td>
-          {% for author in show.authors %}
-          {{ author.firstname }}&nbsp;{{ author.lastname }}
-          {% endfor %}
-        </td>
-        <td>{{ show.location ? show.location.designation : "No location" }}</td>
-        <td>{{ show.representations | length }}</td>
-        <td>{{ show.price|number_format(2, ',', '.') }}&nbsp;&euro;</td>
-        {% if show.bookable %}
-        <td>Oui</td>
-        {% else %}
-        <td>Non</td>
-        {% endif %}
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  <p>Total: {{ shows | length }} spectacles.</p>
-</div>
-{% include 'includes/footer.html.twig' %}
+    <div class="wrapper">
+        <h1>{{ resource }}</h1>
+
+        <table id="table_shows">
+            <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Auteur</th>
+                    <th>Lieu</th>
+                    <th>Représentations</th>
+                    <th>Prix</th>
+                    <th>Réservable</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for show in shows %}
+                    <tr>
+                        <td>
+                            {{ show.title | title }}
+                        </td>
+                        <td>
+                            {% for author in show.authors %}
+                                {{ author.firstname }}&nbsp;{{ author.lastname }}
+                            {% endfor %}
+                        </td>
+                        <td>{{ show.location ? show.location.designation : "No location" }}</td>
+                        <td>{{ show.representations | length }}</td>
+                        <td>{{ show.price|number_format(2, ',', '.') }}&nbsp;&euro;</td>
+                        {% if show.bookable %}
+                            <td>Oui</td>
+                        {% else %}
+                            <td>Non</td>
+                        {% endif %}
+                        <td>
+                            <a href="{{ path('show_show', {'id': show.id}) }}" class="btn btn-primary">
+                                Voir
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            
+        </table>
+
+        <p>Total: {{ shows | length }} spectacles.</p>
+    </div>
+
+    {% include 'includes/footer.html.twig' %}
 {% endblock %}

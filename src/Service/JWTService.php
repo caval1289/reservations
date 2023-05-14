@@ -58,7 +58,7 @@ class JWTService{
           $array = explode('.', $token);
 
           //On décode le Payload - 2 partie du payload
-          $payload = json_decode(base64_decode($array[1], true));
+          $payload = json_decode(base64_decode($array[1], true), true);
 
           return $payload;  
 
@@ -80,7 +80,7 @@ class JWTService{
           $array = explode('.', $token);
 
           //On décode le Payload - 2 partie du payload
-          $header = json_decode(base64_decode($array[0], true));
+          $header = json_decode(base64_decode($array[0], true), true);
 
           return $header;  
 

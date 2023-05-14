@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %} {% block title %}Profile utilisateur{% endblock %} 
+
+{%block body %} 
+
+{% if app.user and  app.user.getIsVerified() ==1 %}
+
+    {% include 'includes/header.html.twig' %}
+    <h2>Profil de {{app.user.firstname}} {{app.user.lastname}}</h2>
+    <section class="vh-100" style="background-color: #9de2ff;">
+        <div class="container py-5 h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <img src="{{ asset('images/user.png') }}" alt="Generic placeholder image" class="img-fluid" style="width: 180px; border-radius: 10px;">
+            <div class="col col-md-9 col-lg-7 col-xl-5">
+              <div class="card" style="border-radius: 15px;">
+                <div class="card-body p-4">
+                  <ul class="list-group list-group-flush text-black">
+                    <li class="list-group-item">
+                      <strong>Login:</strong> {{ app.user.login }}
+                    </li>
+                    <li class="list-group-item">
+                      <strong>Nom:</strong> {{ app.user.firstname }}
+                    </li>
+                    <li class="list-group-item">
+                      <strong>Prénom:</strong> {{ app.user.lastname }}
+                    </li>
+                    <li class="list-group-item">
+                      <strong>Langue:</strong> {{ app.user.language }}
+                    </li>
+                    <li class="list-group-item">
+                      <strong>Email:</strong> {{ app.user.email }}
+                    </li>
+                    <li class="list-group-item">
+                        <div >                       
+                          <a href="{{ path('user_profil_edit') }}" class="btn btn-primary">Modifier le profil</a>                        
+                          <a href="{{ path('user_profil_pwd')}}" class="btn btn-primary">Modifier le mot de passe</a> 
+                        </div>                       
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        
+      </section>      
+     {% else %}     
+        <div class="alert alert-warning alert-dismissible " role="alert" style="font-size: 1rem" >
+            <div class="d-flex justify-content-between">
+                <div class="alert-message">
+                  <strong>Il faut être connecté pour afficher cette page</strong>&nbsp;&nbsp;&nbsp;<a href="{{ path('app_login') }}">Se Connecter</a>
+
+                </div>
+                <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">x</button>
+            </div>
+        </div>
+{% endif %}    
+      
+
+{% endblock %}

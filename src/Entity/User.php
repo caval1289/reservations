@@ -50,6 +50,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private ?bool $is_verified = false;
+    
+    #[ORM\Column(type:'string', length:100)]
+    private $resetToken;
 
     public function __construct()
     {
@@ -216,4 +219,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    
+
+	/**
+	 * @return mixed
+	 */
+	public function getResetToken() {
+		return $this->resetToken;
+	}
+	
+	/**
+	 * @param mixed $resetToken 
+	 * @return self
+	 */
+	public function setResetToken(?string $resetToken): self {
+		$this->resetToken = $resetToken;
+		return $this;
+	}
 }
