@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\Translation\TranslatorInterface;
+
 
 class RegistrationController extends AbstractController
 {
@@ -32,6 +32,8 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
+
+            $user->setRoles(["ROLE_USER"]);
 
             $entityManager->persist($user);
             $entityManager->flush();
@@ -80,12 +82,14 @@ class RegistrationController extends AbstractController
         ]);
     }
     #[Route('/verif/{token}', name: 'verify_user')]
-    public function verifyUser($token, JWTService $jwt, UserRepository $usersRepository, EntityManagerInterface $em): Response
-    {
+    public function verifyUser(string $token, JWTService $jwt, UserRepository $usersRepository, EntityManagerInterface $em): Response
+    {        
+        
         //On vérifie si le token est valide, n'a pas expiré et n'a pas été modifié
         if($jwt->isValid($token) && !$jwt->isExpired($token) && $jwt->check($token, $this->getParameter('app.jwtsecret'))){
             // On récupère le payload
             $payload = $jwt->getPayload($token);
+            
 
             // On récupère le user du token
             $user = $usersRepository->find($payload['user_id']);
@@ -103,7 +107,7 @@ class RegistrationController extends AbstractController
         }
         // Ici un problème se pose dans le token
         $this->addFlash('danger', 'Le token est invalide ou a expiré');
-        return $this->redirect('app_login');
+        return $this->redirect('/login');
     }
     
     

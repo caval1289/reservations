@@ -2,7 +2,7 @@
 
 {%block body %} 
 
-{% if app.user and  app.user.getIsVerified() ==1 %}
+{% if app.user and app.user.getIsVerified() %}
 
     {% include 'includes/header.html.twig' %}
     <h2>Profil de {{app.user.firstname}} {{app.user.lastname}}</h2>
@@ -43,12 +43,12 @@
         </div>
         
         
-      </section>      
+      </section>       
      {% else %}     
         <div class="alert alert-warning alert-dismissible " role="alert" style="font-size: 1rem" >
             <div class="d-flex justify-content-between">
                 <div class="alert-message">
-                  <strong>Il faut être connecté pour afficher cette page</strong>&nbsp;&nbsp;&nbsp;<a href="{{ path('app_login') }}">Se Connecter</a>
+                  <strong>Votre compte n'a pas encore été valider</strong>&nbsp;&nbsp;&nbsp;<a href="{{ path('resend_verif') }}">Renvoyer le lien d'activation</a>
 
                 </div>
                 <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">x</button>

@@ -37,7 +37,7 @@
   </div>
 
   <body>   
-    {% if app.user and app.user.isverified == false %}
+    {% if app.user and app.user.isverified==0%}
     <div class="alert alert-warning alert-dismissible " role="alert" style="font-size: 1rem" >
         <div class="d-flex justify-content-between">
             <div class="alert-message">
