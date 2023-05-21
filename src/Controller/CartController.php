@@ -45,8 +45,10 @@ class CartController extends AbstractController
         //Vérifier si le produit existe
         $id = $representation->getId();
 
-
-        if(!empty($panier[$id])){
+        if (!isset($panier[$id])) {
+            // Écraser le panier existant avec le nouveau produit
+            $panier = [$id => 1];
+        }elseif(!empty($panier[$id])){
             $panier[$id]++;
         }else{
             $panier[$id] = 1;
@@ -94,7 +96,7 @@ class CartController extends AbstractController
     #[Route("/delete", name: "carte_delete_all")]
     public function deleteAll(SessionInterface $session){
         // On récupére le panier actuel
-       $session->remove("panier");
+        $panier = $session->remove("panier");
 
         return $this->redirectToRoute("cart_index");
     }
