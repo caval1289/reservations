@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Fiche d'une représentation{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="text-center mt-5">Panier</h1>
+    <div class="table-responsive mt-4">
+        {% if representation %}
+        <form method="post" action="{{ path('reservation_create', { id: representation.id }) }}">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Spectacle</th>
+                <th>Lieu</th>
+                <th>Prix</th>
+                <th>Nombre de places</th>
+                <th>Date et heure</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+                    <tr>
+
+                        <td><a href="{{ path('representation_show', { id: representation.id }) }}" class="text-decoration-none text-dark">{{ representation.theShow.title }}</a></td>
+                        <td>{% if representation.theLocation %}{{ representation.theLocation.designation }}{% endif %}</td>
+                        <td>{{ representation.theShow.price }} €</td>
+                        <td>
+                            <select name="nb_places" id="nb_places" class="form-select">
+                                {% for i in 0..10 %}
+                                    <option value="{{ i }}">{{ i }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td><datetime>{{ representation.schedule|date('d-m-Y H:i') }}</datetime></td>
+                        <td><button id='btn-payer' type="submit" class="btn btn-primary">Payer</button></td>
+
+                    </tr>
+
+            </tbody>
+        </table>
+        </form>
+        {% endif %}
+    </div>
+    <div id="total-container" style="text-align: right; background-color: #e8e8e8; padding: 10px;">
+        Total : <span id="total">0.00</span> €
+    </div>
+</div>
+
+    <script>
+        //changer le prix total
+        const select = document.querySelector('#nb_places');
+        const total = document.querySelector('#total');
+
+        select.addEventListener('change', () => {
+            const price = {{ representation.theShow.price }};
+            const quantity = select.value;
+            const result = price * quantity;
+            total.textContent = result.toFixed(2);
+        });
+
+
+        // gestion du button payer
+
+        // Récupérer l'élément select et le bouton Payer
+        const btnPayer = document.querySelector('#btn-payer');
+        // Fonction pour désactiver ou activer le bouton Payer en fonction de la valeur du select
+        function updateBtnPayer() {
+            const nbPlaces = parseInt(select.value);
+            if (nbPlaces > 0) {
+                btnPayer.classList.remove('btn-secondary');
+                btnPayer.removeAttribute('disabled');
+                btnPayer.style.pointerEvents = 'auto';
+            } else {
+                btnPayer.classList.add('btn-secondary');
+                btnPayer.setAttribute('disabled', '');
+                btnPayer.style.pointerEvents = 'none';
+            }
+        }
+        // Appeler la fonction une première fois pour initialiser l'état du bouton
+        updateBtnPayer();
+
+        // Écouter les changements de valeur du select
+        ///select.addEventListener('change', updateBtnPayer);
+        select.addEventListener('change', () => {
+            updateBtnPayer()
+            const price = {{ representation.theShow.price }};
+            const quantity = select.value;
+            const result = price * quantity;
+            total.textContent = result.toFixed(2);
+            const newUrl = btnPayer.href.replace(/&prix_total=\d+\.\d{2}/, `&prix_total=${result.toFixed(2)}`);
+            btnPayer.href = newUrl;
+        });
+
+        // Fonction pour récupérer les valeurs du nombre de places et du prix total et envoyer les données via le lien du bouton "Payer"
+        function payer() {
+            const nbPlaces = select.value; // Utiliser select.value au lieu de select.getAttribute('value')
+            const prixTotal = total.textContent;
+            const url = btnPayer.href + '?nb_places=' + nbPlaces + '&prix_total=' + prixTotal;
+            window.location.href = url;
+        }
+
+        // Écouter les clics sur le bouton "Payer"
+        document.getElementById("btn-payer").addEventListener('click', payer);
+
+        // Écouter les clics sur le bouton "Payer"
+        //btnPayer.addEventListener('click', payer);
+
+    </script>
+
+{% endblock %}
+

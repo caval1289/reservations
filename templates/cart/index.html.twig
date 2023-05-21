@@ -1,0 +1,74 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Votre panier{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="text-center mt-5">Votre panier</h1>
+       <a href="{{ path("carte_delete_all") }}"></a><button  class="btn btn-danger  btn-sm p-1" style="font-size: 12px">Supprimer le panier</button>
+        <div class="table-responsive mt-4">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Spectacle</th>
+                            <th>Date et heure</th>
+                            <th>Lieu</th>
+                            <th>Prix</th>
+                            <th>Nombre de places</th>
+                            <th>Total</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for element in dataPanier %}
+                                <tr>
+                                <td><a href="{{ path('representation_show', { id: element.representation.id }) }}" class="text-decoration-none text-dark">{{ element.representation.theShow.title }}</a></td>
+                                <td><datetime>{{ element.representation.schedule|date('d-m-Y H:i') }}</datetime></td>
+                                <td>{% if element.representation.theLocation %}{{ element.representation.theLocation.designation }}{% endif %}</td>
+                                <td class="text-end">{{ element.representation.theShow.price }} €</td>
+                                <td class="text-center">
+                                    <span class="mr-2">
+                                      <a href="{{ path("cart_supp", {id: element.representation.id}) }}">
+                                    <i class="fas fa-minus"></i>
+                                      </a>
+                                    </span>
+                                    {{ element.quantite }}
+                                    <span class="ml-2">
+                                        <a href="{{ path("cart_add", {id: element.representation.id}) }}">
+                                    <i class="fas fa-plus"></i>
+                                        </a>
+                                  </span>
+                                </td>
+                                <td>{{ element.quantite * element.representation.theShow.price }} €</td>
+                                    <td><a href="{{ path("cart_delete", {id: element.representation.id}) }}" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                                    </td>
+
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="5" class="text-center">Votre panier est vide</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+            <div  class="col-md-6 mx-auto">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Montant à payer</h6>
+                        <h3 class="card-text">{{ total }} €</h3>
+
+                        <td><button id='btn-payer' type="submit" class="btn btn-primary btn-block">Payer</button></td>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+{% endblock %}
+
