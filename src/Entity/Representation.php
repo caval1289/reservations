@@ -143,4 +143,21 @@ class Representation
 
         return $this;
     }
+
+
+    public function __toString(): string
+    {
+        return $this->getId();
+    }
+
+    public function __toString2(): string
+    {
+        return $this->getTheLocation();
+    }
+
+    public function __toString3(): string
+    {
+        return $this->getTheShow();
+    }
+
 }

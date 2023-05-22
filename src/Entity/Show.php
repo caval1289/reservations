@@ -21,10 +21,12 @@ class Show
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?int $id = null ;
 
-    #[ORM\Column(length: 60)]
-    private ?string $slug = null;
+    // #[ORM\Column(length: 60)]
+    // private ?string $slug =  null   ;
+    #[ORM\Column(length: 60, nullable: true)]
+private ?string $slug = null;
 
     #[ORM\Column(length: 255)]
     private ?string $title = null;
@@ -43,7 +45,9 @@ class Show
     private ?bool $bookable = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 12, scale: 2, nullable: true)]
-    private ?string $price = null;
+     private ?string $price = null;
+   // #[ORM\Column(type: Types::DECIMAL, precision: 12, nullable: true)]
+
 
     #[ORM\OneToMany(mappedBy: 'the_show', targetEntity: Representation::class, orphanRemoval: true)]
     private Collection $representations;
@@ -134,6 +138,19 @@ class Show
         return $this;
     }
 
+    // public function getPrice(): ?float
+    // {
+    //     return $this->price? $this->price : null;
+    // }
+
+    // public function setPrice(?float $price): self
+    // {
+    //     $this->price = $price ? (string) ($price / 100) : null;
+
+    //     return $this;
+    // }
+
+
     public function getPrice(): ?string
     {
         return $this->price;
@@ -213,4 +230,13 @@ class Show
 
         return $authors;
     }
+    public function __toString(): string
+    {
+        return $this->getTitle();
+    }
+    // public function __toString2(): string
+    // {
+    //     return $this->getLocation();
+    // }
+  
 }
