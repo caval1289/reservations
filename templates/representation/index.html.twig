@@ -3,16 +3,37 @@
 {% block title %}Liste des représentations{% endblock %}
 
 {% block body %}
-    <h1>Liste des {{ resource }}</h1>
 
-    <ul>
-    {% for representation in representation %}
-        <li><a href="{{ path('representation_show', { id: representation.id }) }}">{{ representation.theShow.title }}</a>
-            {% if representation.theLocation %}
-            - <span>{{ representation.theLocation.designation }}</span>
-            {% endif %}
-            - <datetime>{{ representation.schedule|date('d-m-Y H:i') }}</datetime>
-        </li>
-    {% endfor %}
-    </ul>
+    <div class="container">
+        <h1 class="text-center mt-5">Liste des {{ resource }}</h1>
+
+    <div class="table-responsive mt-4">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Spectacle</th>
+                <th>Lieu</th>
+                <th>Prix</th>
+                <th>Date et heure</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for representation in representation %}
+                {% if representation.theShow.bookable > 0 %}
+                <tr>
+                    <td><a href="{{ path('representation_show', { id: representation.id }) }}" class="text-decoration-none text-dark">{{ representation.theShow.title }}</a></td>
+                    <td>{% if representation.theLocation %}{{ representation.theLocation.designation }}{% endif %}</td>
+                    <td>{{ representation.theShow.price }} €</td>
+                    <td><datetime>{{ representation.schedule|date('d-m-Y H:i') }}</datetime></td>
+
+
+                    <td><a href="{{ path('cart_add', { id: representation.id }) }}" class="btn btn-primary">Réserver</a></td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
 {% endblock %}
