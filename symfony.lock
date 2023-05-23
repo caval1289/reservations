@@ -58,7 +58,7 @@
         },
         "files": [
             "./config/packages/nyholm_psr7.yaml"
-
+]},
     "easycorp/easyadmin-bundle": {
         "version": "4.6",
         "recipe": {
