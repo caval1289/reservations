@@ -7,6 +7,7 @@
 /public/bundles/
 /var/
 /vendor/
+.env
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###
@@ -17,6 +18,7 @@
 ###> symfony/phpunit-bridge ###
 .phpunit.result.cache
 /phpunit.xml
+.env
 ###< symfony/phpunit-bridge ###
 
 ###> lexik/jwt-authentication-bundle ###

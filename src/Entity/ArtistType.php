@@ -42,9 +42,13 @@ class ArtistType
     #[ORM\JoinColumn(nullable: false)]
     private ?Artist $artist = null;
 
+    #[ORM\OneToMany(mappedBy: 'artistetype', targetEntity: ArtistTypeShow::class, orphanRemoval: true)]
+    private Collection $artistTypeShows;
+
     public function __construct()
     {
         $this->shows = new ArrayCollection();
+        $this->artistTypeShows = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -115,5 +119,54 @@ class ArtistType
     
             
         }
+
+    /**
+     * @return Collection<int, ArtistTypeShow>
+     */
+    public function getArtistTypeShows(): Collection
+    {
+        return $this->artistTypeShows;
+    }
+
+    public function addArtistTypeShow(ArtistTypeShow $artistTypeShow): self
+    {
+        if (!$this->artistTypeShows->contains($artistTypeShow)) {
+            $this->artistTypeShows->add($artistTypeShow);
+            $artistTypeShow->setArtistetype($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArtistTypeShow(ArtistTypeShow $artistTypeShow): self
+    {
+        if ($this->artistTypeShows->removeElement($artistTypeShow)) {
+            // set the owning side to null (unless already changed)
+            if ($artistTypeShow->getArtistetype() === $this) {
+                $artistTypeShow->setArtistetype(null);
+            }
+        }
+
+        return $this;
+    }
+    
+
+
+// public function __toString()
+// {
+//     return $this->getArtist() . ' - ' . $this->getType();
+// }
+ 
+
+
+public function __toString()
+{
+    $artistName = $this->getArtist() ? $this->getArtist()->getFirstName() . ' ' . $this->getArtist()->getLastName() : 'Unknown Artist';
+    $typeName = $this->getType() ; 
+    
+    return $artistName . ' - ' . $typeName;
+}
+
+
 
 }

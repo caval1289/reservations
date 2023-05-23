@@ -12,6 +12,7 @@ use App\Form\ArtistType;
 
 
 #[Route('/artist')]
+#[IsGranted('ROLE_ADMIN')]
 
 class ArtistController extends AbstractController
 {

@@ -9,6 +9,7 @@ use App\Entity\Show;
 use App\Repository\ShowRepository;
 
 #[Route('/show')]
+#[IsGranted('ROLE_ADMIN')]
 
 class ShowController extends AbstractController
 

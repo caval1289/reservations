@@ -26,6 +26,20 @@ class Reservation
     #[ORM\Column(type: Types::SMALLINT)]
     private ?int $places = null;
 
+    #[ORM\Column]
+    private ?bool $payer = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $prixTotal = null;
+
+    /**
+     * @param bool|null $payer
+     */
+    public function __construct()
+    {
+        $this->payer = false;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -63,6 +77,30 @@ class Reservation
     public function setPlaces(int $places): self
     {
         $this->places = $places;
+
+        return $this;
+    }
+
+    public function isPayer(): ?bool
+    {
+        return $this->payer;
+    }
+
+    public function setPayer(bool $payer): self
+    {
+        $this->payer = $payer;
+
+        return $this;
+    }
+
+    public function getPrixTotal(): ?int
+    {
+        return $this->prixTotal;
+    }
+
+    public function setPrixTotal(?int $prixTotal): self
+    {
+        $this->prixTotal = $prixTotal;
 
         return $this;
     }
