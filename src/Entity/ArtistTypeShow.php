@@ -13,44 +13,49 @@ class ArtistTypeShow
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'artistTypeShows')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?ArtistType $artist_type = null;
+    private ?ArtistType $artistetype = null;
 
-   
-
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'artistTypeShows')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Show $shows = null;
+    private ?Show $show = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getArtistType(): ?ArtistType
+    public function getArtistetype(): ?ArtistType
     {
-        return $this->artist_type;
+        return $this->artistetype;
     }
 
-    public function setArtistType(?ArtistType $artist_type): self
+    public function setArtistetype(?ArtistType $artistetype): self
     {
-        $this->artist_type = $artist_type;
+        $this->artistetype = $artistetype;
+
+        return $this;
+    }
+
+    public function getshow(): ?Show
+    {
+        return $this->show;
+    }
+
+    public function setshow(?Show $show): self
+    {
+        $this->show = $show;
 
         return $this;
     }
 
 
-
-    public function getShows(): ?Show
+    public function __toString()
     {
-        return $this->shows;
+        return $this->getArtistetype()->getType();
+
     }
 
-    public function setShows(?Show $shows): self
-    {
-        $this->shows = $shows;
 
-        return $this;
-    }
 }

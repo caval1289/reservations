@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\User;
 use App\Entity\Artist;
 use App\Entity\ArtistType;
+use App\Entity\ArtistTypeShow;
 use App\Entity\Locality;
 use App\Entity\Location;
 use App\Entity\Representation;
@@ -57,7 +58,7 @@ class DashboardController extends AbstractDashboardController
        yield MenuItem::linkToCrud('Types', 'fas fa-list', Type::class);
        yield MenuItem::linkToCrud('Representations', 'fas fa-list', Representation::class);
        yield MenuItem::linkToCrud('Artist_Type', 'fas fa-list', ArtistType::class);
-       yield MenuItem::linkToCrud('Artist_Type', 'fas fa-list', ArtistType::class);
+       yield MenuItem::linkToCrud('Artist_Type_Show', 'fas fa-list', ArtistTypeShow::class);
 
 
 

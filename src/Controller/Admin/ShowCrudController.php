@@ -25,7 +25,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\LanguageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;   
 use Doctrine\ORM\EntityManagerInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
+use Symfony\Component\HttpFoundation\Response;
 
 
 
@@ -54,17 +56,22 @@ class ShowCrudController extends AbstractCrudController
 
         ;
     }
-    
     public function configureFields(string $pageName): iterable
+
     {
-        
+        if ($pageName === 'new') {
+            // Add a success message to the flash bag
+            $this->addFlash('success', 'Show created successfully. You can now create a representation.');
+        }
     
         return [
             IdField::new('id')->hideOnForm(),
             AssociationField::new('location', 'Location'),
-            SlugField::new('slug')->setTargetFieldName('title'),
-        //    TextField::new('slug')
-        //  ->setFormTypeOption('data', ''),
+            AssociationField::new('artistTypes', 'Artist_Types_ID')
+                ->setHelp('Selectionner un(e) Auteur, un(e) metteur en scène et un(e) disttributeur) ')
+                ->setRequired(true),
+
+                SlugField::new('slug')->setTargetFieldName('title'),
             TextField::new('title'),
             TextField::new('description'),
             TextField::new('poster_url'),
@@ -75,6 +82,9 @@ class ShowCrudController extends AbstractCrudController
            ->setStoredAsCents('true'),
          
         ];
+
+
+      
     }
     
     

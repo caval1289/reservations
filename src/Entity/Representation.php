@@ -8,6 +8,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
+use PhpParser\Node\Expr\Cast\String_;
+use PhpParser\Node\Scalar\String_ as ScalarString_;
 
 #[ORM\Entity(repositoryClass: RepresentationRepository::class)]
 #[ORM\Table(name:"representations")]
@@ -158,4 +160,9 @@ class Representation
         return $this->getTheShow();
     }
 
+
+    public function __toString4() 
+    {
+        return $this->getSchedule();
+    }
 }

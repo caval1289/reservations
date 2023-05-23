@@ -2,18 +2,16 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\ArtistTypeShow;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 
-class ArtistTypeShowFixtures extends Fixture implements DependentFixtureInterface
+class ArtistTypeShowFixtures extends Fixture  implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
-        // $product = new Product();
-        // $manager->persist($product);       
-
         $artistTypeShows = [
             [
                 'artist_firstname'=>'Daniel',
@@ -150,9 +148,16 @@ class ArtistTypeShowFixtures extends Fixture implements DependentFixtureInterfac
              );
              
              $show->addArtistType($artistType);
-             
+
+             $artistTypeShow = new ArtistTypeShow();
+             $artistTypeShow->setArtisteType($artistType);
+             $artistTypeShow->setShow($show);
+            //  var_dump($show->getId());
+            //  var_dump($artistTypeShow->getShow()->getId());
+
+
              //Persister l'entité principale
-             $manager->persist($show);
+             $manager->persist($artistTypeShow);
          }
  
          $manager->flush();
@@ -162,8 +167,7 @@ class ArtistTypeShowFixtures extends Fixture implements DependentFixtureInterfac
          return [
              ArtistTypeFixtures::class,
              ShowFixtures::class,
-         ];
-     }
- 
 
+         ];
+    }
 }

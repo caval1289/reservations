@@ -10,8 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping\JoinColumn;
 
-
-
+use function PHPUnit\Framework\returnValue;
 
 #[ORM\Entity(repositoryClass: ShowRepository::class)]
 #[ORM\Table(name: "shows")]
@@ -55,10 +54,14 @@ private ?string $slug = null;
     #[ORM\ManyToMany(targetEntity: ArtistType::class, inversedBy: 'shows')]
     private Collection $artistTypes;
 
+    #[ORM\OneToMany(mappedBy: 'representations', targetEntity: ArtistTypeShow::class, orphanRemoval: true)]
+    private Collection $artistTypeShows;
+
     public function __construct()
     {
         $this->representations = new ArrayCollection();
         $this->artistTypes = new ArrayCollection();
+        $this->artistTypeShows = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -238,5 +241,42 @@ private ?string $slug = null;
     // {
     //     return $this->getLocation();
     // }
+
+    /**
+     * @return Collection<int, ArtistTypeShow>
+     */
+    public function getArtistTypeShows(): Collection
+    {
+        return $this->artistTypeShows;
+    }
+
+    public function addArtistTypeShow(ArtistTypeShow $artistTypeShow): self
+    {
+        if (!$this->artistTypeShows->contains($artistTypeShow)) {
+            $this->artistTypeShows->add($artistTypeShow);
+            $artistTypeShow->setRepresentations($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArtistTypeShow(ArtistTypeShow $artistTypeShow): self
+    {
+        if ($this->artistTypeShows->removeElement($artistTypeShow)) {
+            // set the owning side to null (unless already changed)
+            if ($artistTypeShow->getRepresentations() === $this) {
+                $artistTypeShow->setRepresentations(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString2()
+    {
+        $artistName = $this->getArtistTypes() ? $this->getArtistTypes()->getAuthors->returnValue() : '';
+        return $artistName;
+    }
+    
   
 }
