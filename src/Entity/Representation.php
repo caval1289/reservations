@@ -16,6 +16,8 @@ use PhpParser\Node\Scalar\String_ as ScalarString_;
 
 class Representation
 {
+    const DEVISE = 'eur';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
