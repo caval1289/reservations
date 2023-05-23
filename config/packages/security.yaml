@@ -22,7 +22,7 @@ security:
             form_login:
                 login_path: app_login	# Show Login form
                 check_path: app_login	# Handle Login form
-                default_target_path: /show
+                default_target_path: /user
                 enable_csrf: true
 
             logout:
@@ -45,6 +45,7 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
+
          - { path: ^/admin, roles: ROLE_ADMIN }
          - { path: ^/artist, roles: ROLE_ADMIN }
          - { path: ^/show, roles: ROLE_USER }
@@ -53,8 +54,10 @@ security:
          - { path: ^/representation, roles: ROLE_USER }
          - { path: ^/role, roles: ROLE_USER }
          - { path: ^/type, roles: ROLE_USER }
-
         #- { path: ^/profile, roles: ROLE_USER }
+        # - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/users, roles: ROLE_USER }
+
 
 when@test:
     security:

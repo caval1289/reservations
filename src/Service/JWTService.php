@@ -22,11 +22,12 @@ class JWTService{
         // On encode en base64
         $base64Header = base64_encode(json_encode($header));
         $base64Payload = base64_encode(json_encode($payload));
+        
 
 
         //On nettoie les valeurs encodées (retrait des +, ? et =)
         $base64Header = str_replace(['+' , '/', '='], ['-' , '_' , ''], $base64Header);
-        $base64Paylaod = str_replace(['+' , '/', '='], ['-' , '_' , ''], $base64Payload);
+        $base64Payload = str_replace(['+' , '/', '='], ['-' , '_' , ''], $base64Payload);
 
         //On génère la signature (il faut un secret)
         $secret = base64_decode($secret);
@@ -36,8 +37,8 @@ class JWTService{
         $base64Signature = str_replace(['+' , '/', '='], ['-' , '_' , ''], $base64Signature);
 
         //On crée le token
-        $jwt = $base64Header . '.' . $base64Paylaod . '.' . $base64Signature;
-
+        $jwt = $base64Header . '.' . $base64Payload . '.' . $base64Signature;
+       
         return $jwt;       
 
         } 
@@ -58,8 +59,8 @@ class JWTService{
           $array = explode('.', $token);
 
           //On décode le Payload - 2 partie du payload
-          $payload = json_decode(base64_decode($array[1], true));
-
+          $payload = json_decode(base64_decode($array[1], true), true);          
+          
           return $payload;  
 
         }
@@ -80,7 +81,8 @@ class JWTService{
           $array = explode('.', $token);
 
           //On décode le Payload - 2 partie du payload
-          $header = json_decode(base64_decode($array[0], true));
+          $header = json_decode(base64_decode($array[0], true), true);
+          
 
           return $header;  
 
