@@ -1,66 +1,92 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Fiche d'un spectacle{% endblock %}
+{% block title %}Fiche d'un spectacle
+{% endblock %}
 
 {% block body %}
-    <article>
-        <h1>{{ show.title }}</h1>
+<div class="container">
+	<article>
+		<h1>{{ show.title }}</h1>
 
-        {% if show.posterUrl %}
-        <p><img src="{{ asset(show.getposterUrl()) }}" alt="{{ show.title }}" width="200"></p>
-        {% else %}
-        <canvas width="200" height="100" style="border:1px solid #000000;"></canvas>
-        {% endif %}
+		{% if show.posterUrl %}
+			<p><img src="{{ asset(show.getposterUrl()) }}" alt="{{ show.title }}" width="200"></p>
+		{% else %}
+			<canvas width="200" height="100" style="border:1px solid #000000;"></canvas>
+		{% endif %}
 
-        {% if show.location %}
-        <p><strong>Lieu de création:</strong> {{ show.location.designation }}</p>
-        {% endif %}
-        
-       <p><strong>Prix:</strong> {{ show.price }} €</p>
+		{% if show.location %}
+			<p>
+				<strong>Lieu de création:</strong>
+				{{ show.location.designation }}</p>
+		{% endif %}
 
-        {% if show.bookable %}
-        <p><em>Réservable</em></p>
-        {% else %}
-        <p><em>Non réservable</em></p>
-        {% endif %}
-    </article>
+		<p>
+			<strong>Prix:</strong>
+			{{ show.price }}
+			€</p>
 
-           <h2>Liste des représentations</h2>
-        {% if show.representations|length>=1 %}
-        <ul>
-            {% for representation in show.representations %}
-                <li>{{ representation.schedule|date('d/m/Y G:i:s') }}</li>              
-            {% endfor %}
-        </ul>
-        {% else %}
-        <p>Aucune représentation</p>
-        {% endif %}
-        
-        <h2>Liste des artistes</h2>
-        <p><strong>Auteur:</strong>
-        {% for auteur in collaborateurs['auteur'] %}
-            {{ auteur.firstname }} 
-            {{ auteur.lastname }}{% if loop.index == loop.length-1 %} et 
-            {% elseif not loop.last %}, {% endif %}
-        {% endfor %}
-        </p>
-        <p><strong>Metteur en scène:</strong>
-        {% for scenographe in collaborateurs['scénographe'] %}
-            {{ scenographe.firstname }} 
-            {{ scenographe.lastname }}{% if loop.index == loop.length-1 %} et 
-            {% elseif not loop.last %}, {% endif %}
-        {% endfor %}
-        </p>
-        <p><strong>Distribution:</strong>
-        {% for comedien in collaborateurs['comédien'] %}
-            {{ comedien.firstname }} 
-            {{ comedien.lastname }}{% if loop.index == loop.length-1 %} et 
-            {% elseif not loop.last %}, {% endif %}
-        {% endfor %}
-        </p>
+		{% if show.bookable %}
+			<p>
+				<em>Réservable</em>
+			</p>
+		{% else %}
+			<p>
+				<em>Non réservable</em>
+			</p>
+		{% endif %}
+	</article>
+
+	<h2>Liste des représentations</h2>
+	{% if show.representations|length>=1 %}
+		<ul>
+			{% for representation in show.representations %}
+				<li>{{ representation.schedule|date('d/m/Y G:i:s') }}</li>
+			{% endfor %}
+		</ul>
+	{% else %}
+		<p>Aucune représentation</p>
+	{% endif %}
+
+	<h2>Liste des artistes</h2>
+	<p>
+		<strong>Auteur:</strong>
+		{% for auteur in collaborateurs['auteur'] %}
+			{{ auteur.firstname }}
+			{{ auteur.lastname }}
+			{% if loop.index == loop.length-1 %}
+				et
+				{% elseif not loop.last %},
+			{% endif %}
+		{% endfor %}
+	</p>
+	<p>
+		<strong>Metteur en scène:</strong>
+		{% for scenographe in collaborateurs['scénographe'] %}
+			{{ scenographe.firstname }}
+			{{ scenographe.lastname }}
+			{% if loop.index == loop.length-1 %}
+				et
+				{% elseif not loop.last %},
+			{% endif %}
+		{% endfor %}
+	</p>
+	<p>
+		<strong>Distribution:</strong>
+		{% for comedien in collaborateurs['comédien'] %}
+			{{ comedien.firstname }}
+			{{ comedien.lastname }}
+			{% if loop.index == loop.length-1 %}
+				et
+				{% elseif not loop.last %},
+			{% endif %}
+		{% endfor %}
+	</p>
 
 
+	<a href="{{ path('cart_add', { id: show.id }) }}" class="btn btn-primary">Réserver</a>
+	<nav>
+		<a href="{{ path('show_index') }}">Retour à l'index</a>
+	</nav>
 
-    <nav><a href="{{ path('show_index') }}">Retour à l'index</a></nav>
-    
+</div>
 {% endblock %}

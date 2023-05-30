@@ -1,40 +1,60 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>{% block title %}Default Title{% endblock %}</title>    
-    
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Reservations</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0", shrink-to-fit=no" />
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" , shrink-to-fit="no"/>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
-      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-      crossorigin="anonymous"
-    />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-    {# Run `composer require symfony/webpack-encore-bundle` to start using
-    Symfony UX #} {% block stylesheets %}
-    {{
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
+		<style>
+			html {
+				height: 100%;
+			}
+			body {
+				min-height: 100vh;
+				margin: 0;
+				padding: 0;
+				overflow-y: scroll;
+			}
+      ul {
+        list-style-type: none;
+      }
+			.container {
+        text-align: center;
+        margin-top: 100px;
+        border: 1px solid #ced4da;
+        padding: 50px;
+			}
+		</style>
+
+		{# Run `composer require symfony/webpack-encore-bundle` to start using
+						    Symfony UX #}
+		{% block stylesheets %}
+			{{
       encore_entry_link_tags("app")
     }}
-    {% endblock %} {% block javascripts %}
-    {{
+		{% endblock %}
+		{% block javascripts %}
+			{{
       encore_entry_script_tags("app")
     }}
-    {% endblock %}
-  </head>
-  <body>
-    {% block body %}{% endblock %}    
-    {%include "includes/flash.html.twig"%}
+		{% endblock %}
+	</head>
+	<body>
+		{% include 'includes/header.html.twig' %}
+		{%include "includes/menu.html.twig"%}
+		{% block body %}{% endblock %}
+		{%include "includes/footer.html.twig"%}
+		{%include "includes/flash.html.twig"%}
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.4/datatables.min.js"></script>
-    
-  </body>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+		<script src="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.13.4/datatables.min.js"></script>
+
+	</body>
 </html>

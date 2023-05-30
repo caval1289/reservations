@@ -1,12 +1,10 @@
-{% extends 'base.html.twig' %} {% block body %}
-
 <header>
-  <div class="jumbotron" style="padding: 1rem">
+  <div class="jumbotron" style="padding: 1rem; margin-bottom: 0;">
     <div class="d-flex justify-content-between align-items-center">
       <h1 class="my-0" style="font-size: 1rem">Projet Réservations</h1>
       <div>
         {% if app.user %}
-        <a id="signin" class="btn btn-link" style="font-size: 1rem" href="#"
+        <a id="signin" class="btn btn-link" style="font-size: 1rem" href="/user"
           >Mon Compte</a
         >
         <a
@@ -54,4 +52,3 @@
 
   </body>
 </header>
-{% endblock %}

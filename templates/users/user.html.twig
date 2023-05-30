@@ -4,7 +4,6 @@
 
 {% if app.user and app.user.getIsVerified() %}
 
-    {% include 'includes/header.html.twig' %}
     <h2>Profil de {{app.user.firstname}} {{app.user.lastname}}</h2>
     <section class="vh-100" style="background-color: #9de2ff;">
         <div class="container py-5 h-100">

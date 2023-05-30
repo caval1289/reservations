@@ -29,7 +29,7 @@ security:
         path: app_logout
 
         # where to redirect after logout
-        target: /main
+        target: /
 
       # configure the maximum login attempts
       login_throttling:
